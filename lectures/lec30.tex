@@ -93,8 +93,13 @@
 	Since $f(F(y))g(F(y))$ is scalar-valued and factors out, we conclude
 	\begin{align*}
 		(F^*\alpha \wedge F^*\beta )_y(T)
-		=
-		f(F(y))g(F(y)) \,
+		&= f(F(y)) g(F(y)) \det \! \left(
+        \begin{pmatrix}
+            e_{I}^\top \\ 
+            e_{J}^\top 
+        \end{pmatrix}
+        DF(y)T \right)  
+		\\ &=f(F(y))g(F(y)) \,
 		\det\!\begin{pmatrix}
 			      e_{I}^\top DF(y) T_{1} \\
 			      e_{J}^\top DF(y) T_{2}
@@ -122,15 +127,15 @@
 Now we bring this all back to the motivation and why we started inspecting differential forms in the first place. The key desideratum was invariance under reparametrisation.
 
 \begin{definition}[Orientable submanifold]\label{def:orientable-subm}
-	A $k$-submanifold $M \subset \mathbb{R}^{n}$ is called orientable if it is covered by local parametrisations with transition maps that have positive Jacobi determinants. That is, for any two local parametrisations $\phi_{1}, \phi_{2}$ that cover different parts of the manifold $M \cap U_{1}$ and $M \cap U_{2}$ respectively, then the reparametrisation $\psi = \phi_{2}^{-1}  \circ \phi_{1}$ for $M \cap U_{1} \cap U_{2}$ has positive Jacobi determinant.
+	A $k$-submanifold $M \subset \mathbb{R}^{n}$ is called orientable if it is covered by local parametrisations with transition maps that have positive Jacobi determinants. That is, for any two local parametrisations $\phi_{1}, \phi_{2}$ that cover different parts of the manifold $M \cap U_{1}$ and $M \cap U_{2}$ respectively, the reparametrisation $\psi = \phi_{2}^{-1}  \circ \phi_{1}$ for $M \cap U_{1} \cap U_{2}$ has positive Jacobi determinant.
 \end{definition}
 
 \begin{remark}[Criterion in $3$D]
-	In $\mathbb{R}^{3}$, a $2$-submanifold $M \subset \mathbb{R}^{3}$ is orientable if and only if there exists a normal vector map $\exists \nu: M \to \mathbb{S}^{2} \subset \mathbb{R}^{3}$, $\nu(p) \perp T_{p}M$ and $\nu$ is continuous. See exercise sheet.
+	In $\mathbb{R}^{3}$, a $2$-submanifold $M \subset \mathbb{R}^{3}$ is orientable if and only if there exists a normal vector map $\exists \nu: M \to \mathbb{S}^{2} \subset \mathbb{R}^{3}$, i.e. $\nu(p) \perp T_{p}M$ and $\nu$ is continuous. See exercise sheet.
 \end{remark}
 
 \begin{definition}[Integral over parametrised submanifolds using $k$-forms]\label{def:int-param-subm-k-form}
-	Let $V \subset \mathbb{R}^{k}, U \subset \mathbb{R}^{n}$ open and $\phi: V \to U$ be a parametrised submanifold $M = \phi(V)$ that is orientable. Let $\alpha \in \Omega^{k}(U)$. We define
+	Let $V \subset \mathbb{R}^{k}$, $U \subset \mathbb{R}^{n}$ open and $\phi: V \to U$ be a parametrised submanifold $M = \phi(V)$ that is orientable. For $\alpha \in \Omega^{k}(U)$, we define
 	\begin{align*}
 		\int_{M} \alpha := \int_{V} \alpha (D \phi(x)) \, dx.
 	\end{align*}
