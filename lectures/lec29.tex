@@ -1,126 +1,127 @@
 \section{Differential forms}
 
-Let's think heuristically for a second. How do we generalise line integrals? Which quantities over parametrised submanifolds of dimension $k$ are invariant under reparametrisation? That is the question that we will answer with differential forms. We inspect a map 
+Let's think heuristically for a second. How do we generalise line integrals? Which quantities over parametrised submanifolds of dimension $k$ are invariant under reparametrisation? That is the question that we will answer with differential forms. We inspect a map
 \begin{align*}
-    \alpha_{p}(T) = \alpha (p, T)
+	\alpha_{p}(T) = \alpha (p, T)
 \end{align*}
 that takes a point $p \in \mathbb{R}^{n}$ and an $n \times k$ matrix $T$. Then we would define something like
 \begin{align*}
-    \int_{M} \alpha := \int_{V} \alpha ( \phi(x), D\phi(x) ) \, dx,
+	\int_{M} \alpha := \int_{V} \alpha ( \phi(x), D\phi(x) ) \, dx,
 \end{align*}
 for $\phi: V \subset \mathbb{R}^{k} \to \mathbb{R}^{n}$ a parametrisation of the manifold $M = \phi(V)$. Notice the similarity to the definition of the line integral. Let $\psi: W \to V$ be a $C^{1}$ diffeomorphism with $\det D \psi > 0$, which we refer to as "orientation-preserving". Using the chain rule, we get
 \begin{align*}
-    \int_{W} \alpha (\phi \circ \psi(y), D (\phi \circ \psi)(y)) \, dy = \int_{W} \alpha (\phi(\psi(y)), D \phi(\psi(t)) D \psi(y)) \, dy.
+	\int_{W} \alpha (\phi \circ \psi(y), D (\phi \circ \psi)(y)) \, dy = \int_{W} \alpha (\phi(\psi(y)), D \phi(\psi(t)) D \psi(y)) \, dy.
 \end{align*}
 Similar to the line integral, we want $\alpha (p, T S) = \alpha (p,T) \det S$ for $T$ an $n \times k$ and $S$ an $k \times k$ matrix. Then, using change of variables, the integral would be
 \begin{align*}
-    \int_{W} \alpha (\phi(\psi(y)), D \phi(\psi(y))) \det D \psi(y) \, dy = \int_{V} \alpha ( \phi(x), D\phi(x)) \, dx.
+	\int_{W} \alpha (\phi(\psi(y)), D \phi(\psi(y))) \det D \psi(y) \, dy = \int_{V} \alpha ( \phi(x), D\phi(x)) \, dx.
 \end{align*}
 This is the characterising property of $k$-forms.
 
 \begin{eg}[Important example]
-    We fix a point $p$ and a $k \times n$ matrix $A$. If we define $\alpha_{A}(T) := \det (AT)$, then we can verify
-    \begin{align*}
-        \alpha_{A}(TS) = \det (ATS) = \det (AT) \det (S) = \alpha_{A}(T) \det (S).
-    \end{align*}
+	We fix a point $p$ and a $k \times n$ matrix $A$. If we define $\alpha_{A}(T) := \det (AT)$, then we can verify
+	\begin{align*}
+		\alpha_{A}(TS) = \det (ATS) = \det (AT) \det (S) = \alpha_{A}(T) \det (S).
+	\end{align*}
 
-    More general, you can fix matrices $A_{1}, \dots, A_{N}$ that are $k \times n$ and $c_{1}, \dots, c_{N} \in \mathbb{R}$ and define
-    \begin{align*}
-        \alpha (T) = \sum_{\ell=1}^{N} c_{\ell} \det (A_{\ell}T), 
-    \end{align*}
-    which also has the desired property.
+	More general, you can fix matrices $A_{1}, \dots, A_{N}$ that are $k \times n$ and $c_{1}, \dots, c_{N} \in \mathbb{R}$ and define
+	\begin{align*}
+		\alpha (T) = \sum_{\ell=1}^{N} c_{\ell} \det (A_{\ell}T),
+	\end{align*}
+	which also has the desired property.
 \end{eg}
 
 \begin{definition}[$k$-form in $\mathbb{R}^{n}$]\label{def:k-form}
-    Let $k \geq 1$ and $U \subset \mathbb{R}^{n}$ open. A $k$-form is a map $\alpha$ that assigns each point $p \in U$ a map $\alpha_{p}: \mathbb{R}^{n \times k} \to \mathbb{R}$ 
-    % A $k$-form is a map $\alpha: \mathbb{R}^{n \times k} \to \mathbb{R}$ 
-    that satisfies
-    \begin{enumerate} 
-        \item $\alpha_{p}(TS) = \alpha_{p}(T) \det (S)$ for all $T \in \mathbb{R}^{n \times k}$ and $S \in \mathbb{R}^{k \times k}$,
-        \item $\alpha_{p}$ multilinear.
-    \end{enumerate}
-    In the exercise sheet, we will prove that if $\alpha_{p}$ satisfies (1) and (2), then
-    \begin{align*}
-        \alpha_{p} (T) := \sum_{i \in \mathcal{I}_{k}} c_{i_{1} \cdots i_{k}} \det ((e_{i_{1}}, \dots, e_{i_{k}})^\top T),
-    \end{align*}
-    for the multi-index set $\mathcal{I}_{k} = \left\{ (i_{1}, \dots, i_{k}) \in \mathbb{N}^{k} \mid i_{1} < \dots < i_{k} \right\}$, so the set of increasing multi-indices of length $k$ and coefficients $c_{i} \in \mathbb{R}$. There are $n$ over $k$ such coefficients.
+	Let $k \geq 1$ and $U \subset \mathbb{R}^{n}$ open. A $k$-form is a map $\alpha$ that assigns each point $p \in U$ a map $\alpha_{p}: \mathbb{R}^{n \times k} \to \mathbb{R}$
+	% A $k$-form is a map $\alpha: \mathbb{R}^{n \times k} \to \mathbb{R}$ 
+	that satisfies
+	\begin{enumerate}
+		\item $\alpha_{p}(TS) = \alpha_{p}(T) \det (S)$ for all $T \in \mathbb{R}^{n \times k}$ and $S \in \mathbb{R}^{k \times k}$,
+		\item $\alpha_{p}$ multilinear in the columns (or rows) of the input matrix.
+	\end{enumerate}
+	In the exercise sheet, we will prove that if $\alpha_{p}$ satisfies (1) and (2), then
+	\begin{align*}
+		\alpha_{p} (T) := \sum_{i \in \mathcal{I}_{k}} c_{i_{1} \cdots i_{k}} \det ((e_{i_{1}}, \dots, e_{i_{k}})^\top T),
+	\end{align*}
+	for the multi-index set $\mathcal{I}_{k} = \left\{ (i_{1}, \dots, i_{k}) \in \mathbb{N}^{k} \mid i_{1} < \dots < i_{k} \right\}$, so the set of increasing multi-indices of length $k$ and coefficients $c_{i} \in \mathbb{R}$. There are $n$ over $k$ such coefficients.
 
-    In fact, this is so important and common that we define the "simple" $k$-forms $\omega_{I}$ which assign each point $p \in U$ the map $\omega_{I}: T \mapsto \det(e_{I}^\top T)$ for each $I \in \mathcal{I}_{k}$ and express any other $k$-form as a linear combination of these.
+	In fact, this is so important and common that we define the "simple" $k$-forms $\omega_{I}$ which assign each point $p \in U$ the map $\omega_{I}: T \mapsto \det(e_{I}^\top T)$ satisfying (1) and (2) for each $I \in \mathcal{I}_{k}$ and express any other $k$-form as a linear combination of these.
 \end{definition}
 
 \begin{definition}[Wedge product]\label{def:wedge-product}
-    Let $\alpha $ be a $k$-form and $\beta$ an $m$-form such that $k + m \leq n$. Fix $\alpha_{p}$ and $\beta_{p}$ at a point $p \in U$. 
-    
-    If $\alpha_{p}$ and $\beta_{p} $ are of the form $\alpha_{p}(T) = \det (A T)$ and $\beta_{p} (S) = \det (B S)$, we define the map
-    \begin{align*}
-        (\alpha_{p} \wedge \beta_{p})(X) := \det \left( \begin{pmatrix} A \\ \hline B \end{pmatrix} X \right),
-    \end{align*}
-    for $X$ a $n \times (k+m)$ matrix, $(A | B)^\top$ a $(k+m) \times n$ matrix. 
+	Let $\alpha $ be a $k$-form and $\beta$ an $m$-form such that $k + m \leq n$. Fix $\alpha_{p}$ and $\beta_{p}$ at a point $p \in U$.
 
-    Once you know the definition for the simple version, use linearity to get 
-    \begin{align*}
-        \alpha_{p} \wedge \beta_{p} = \left( \sum_{i=1}^{M} a_{i} \alpha_{i} \right) \wedge \left( \sum_{j=1}^{N} b_{j} \beta_{j} \right) = \sum_{i=1}^{M} \sum_{j=1}^{N} a_{i} b_{j} \alpha_{i} \wedge \beta_{j}.
-    \end{align*}
+	If $\alpha_{p}$ and $\beta_{p} $ are of the form $\alpha_{p}(T) = \det (A T)$ and $\beta_{p} (S) = \det (B S)$, we define the map
+	\begin{align*}
+		(\alpha_{p} \wedge \beta_{p})(X) := \det \left( \begin{pmatrix} A \\ \hline B \end{pmatrix} X \right),
+	\end{align*}
+	for $X$ a $n \times (k+m)$ matrix, $(A | B)^\top$ a $(k+m) \times n$ matrix.
 
-    Then, for each point $p \in U$, define $(\alpha \wedge \beta )_{p} := \alpha_{p} \wedge \beta_{p}$.
+	Once you know the definition for the simple version, use linearity to get
+	\begin{align*}
+		\alpha_{p} \wedge \beta_{p} = \left( \sum_{i=1}^{M} a_{i} \alpha_{i} \right) \wedge \left( \sum_{j=1}^{N} b_{j} \beta_{j} \right) = \sum_{i=1}^{M} \sum_{j=1}^{N} a_{i} b_{j} \alpha_{i} \wedge \beta_{j}.
+	\end{align*}
+
+	Then, for each point $p \in U$, define $(\alpha \wedge \beta )_{p} := \alpha_{p} \wedge \beta_{p}$.
 \end{definition}
 
 \begin{definition}[Conventions about $k$-forms]\label{def:conv-forms}
-    By convention, $0$-forms in a set $U \subset \mathbb{R}^{n}$ open are $C^{\infty}(U)$ functions. 
+	By convention, $0$-forms in a set $U \subset \mathbb{R}^{n}$ open are $C^{\infty}(U)$ functions.
 
-    Also, for any $k$-form $\alpha $ assigning $x \in U$ the map $\alpha_{x}$, we write
-    \begin{align*}
-        \alpha_{x}(T) = \sum_{I \in \mathcal{I}_{k}}^{} c_{I}(x) \omega_{I}(T),
-    \end{align*}
-    and we demand that each $c_{I}(x)$ is a $C^{\infty}$ function in $x$.
+	Also, for any $k$-form $\alpha $ assigning $x \in U$ the map $\alpha_{x}$, we write
+	\begin{align*}
+		\alpha_{x}(T) = \sum_{I \in \mathcal{I}_{k}}^{} c_{I}(x) \omega_{I}(T),
+	\end{align*}
+	and we demand that each $c_{I}(x)$ is a $C^{\infty}$ function in $x$.
 
-    For $k > n$, the matrix $e_{I}^\top T$ is \textit{always} not invertible, hence any $k$-form with $k>n$ is identically $0$. 
-    
-    For $k = n$, there is only $1$ multi-index in the set $\mathcal{I}_{n}$, hence all $n$-forms just look like $c(x) \cdot \det (I_{n} T) = c(x) \det (T)$. 
+	For $k > n$, the matrix $e_{I}^\top T$ is \textit{always} not invertible, hence any $k$-form with $k>n$ is identically $0$.
 
-    We denote $\Omega^{k}(U)$ the set of $k$-forms with coefficients $C^{\infty}$. In particular, $\Omega^{0}(U) = C^{\infty}(U)$.
+	For $k = n$, there is only $1$ multi-index in the set $\mathcal{I}_{n}$, hence all $n$-forms just look like $c(x) \cdot \det (I_{n} T) = c(x) \det (T)$.
+
+	We denote $\Omega^{k}(U)$ the set of $k$-forms with coefficients $C^{\infty}$. In particular, $\Omega^{0}(U) = C^{\infty}(U)$.
 \end{definition}
 
 \begin{definition}[Differential]\label{def:differential-forms-version}
-    Let $U \subset \mathbb{R}^{n}$ open, $0 \leq k \leq n$ and $\alpha \in \Omega^{k}(U)$ a $k$-form written as
-    \begin{align*}
-        \alpha_{x}(T) = \sum_{I \in \mathcal{I}_{k}} c_{I}(x) \omega_{I}(T). 
-    \end{align*}
-    Then $d\alpha $ is a $k+1$-form defined by
-    \begin{align*}
-        (d\alpha )_{x} := \sum_{I \in \mathcal{I}_{k}} dc_{I}(x) \wedge \omega_{I},
-    \end{align*}
-    where we remind ourselves that $dc_{I}(x): v \mapsto (Dc_{I})_{x} (v)$ and it is a $1$-form, so each $dc_{I}(x) \wedge \omega_{I}$ is a $k+1$-form.
+	Let $U \subset \mathbb{R}^{n}$ open, $0 \leq k \leq n$ and $\alpha \in \Omega^{k}(U)$ a $k$-form written as
+	\begin{align*}
+		\alpha_{x}(T) = \sum_{I \in \mathcal{I}_{k}} c_{I}(x) \omega_{I}(T).
+	\end{align*}
+	Then $d\alpha $ is a $k+1$-form defined by
+	\begin{align*}
+		d\alpha  := \sum_{I \in \mathcal{I}_{k}} dc_{I} \wedge \omega_{I},
+	\end{align*}
+	where we remind ourselves that $dc_{I}: x \mapsto (Dc_{I})_{x}$ and it is a $1$-form, so each $dc_{I} \wedge \omega_{I}$ is a $k+1$-form.
 \end{definition}
 
 \begin{remark}[Relation to old notation]\label{rem:k-forms}
-    The coordinate functions $f(x) = x_{i}$ for $1 \leq i \leq n$ have $df_{x} = Df(x) = e_{i}^\top$. We denote $dx_{i} := df_{x}$. And so we see the identity $dx_{i} = e_{i}^\top$. And we know any $k$-form can be written as
-    \begin{align*}
-        \alpha_{x} (T) = \sum_{I \in \mathcal{I}_{k}} c_{I}(x) \omega_{I}(T).
-    \end{align*}
-    And from the definition of the wedge product $\omega_{I} = dx_{i_{1}} \wedge dx_{i_{2}} \wedge \cdots \wedge dx_{i_{k}} =: dx_{I}$. 
+	The coordinate functions $f(x) = x_{i}$ for $1 \leq i \leq n$ have $df_{x} = Df(x) = e_{i}^\top$. We denote $dx_{i} := df_{x}$. And so we see the identity $dx_{i} = e_{i}^\top$. And we know any $k$-form can be written as
+	\begin{align*}
+		\alpha_{x} (T) = \sum_{I \in \mathcal{I}_{k}} c_{I}(x) \omega_{I}(T).
+	\end{align*}
+	And from the definition of the wedge product $\omega_{I} = dx_{i_{1}} \wedge dx_{i_{2}} \wedge \cdots \wedge dx_{i_{k}} =: dx_{I}$.
 
-    With this observation, any $k$-form $\alpha $ in $U$ has the expression 
-    \begin{align*}
-        \alpha = \sum_{I \in \mathcal{I}_{k}} c_{I} \, dx_{I}
-    \end{align*}
-    and the $dx_{I}$ are kind of like basis vectors, and they are constructed from the $dx_{i}$. 
+	With this observation, any $k$-form $\alpha $ in $U$ has the expression
+	\begin{align*}
+		\alpha_{x} = \sum_{I \in \mathcal{I}_{k}} c_{I}(x) \, dx_{I}
+	\end{align*}
+	and the $dx_{I}$ are kind of like basis vectors, and they are constructed from the $dx_{i}$.
 
-    It is left as an exercise to show that for $\Psi: V \to U$ a diffeomorphism between $V, U \subset \mathbb{R}^{n}$,
-    \begin{align*}
-        d \Psi_{1} \wedge d \Psi_{2} \wedge \cdots \wedge d \Psi_{n} = \det D \Psi(x) \cdot d x_{1} \wedge dx_{2} \wedge \cdots \wedge dx_{n}.
-    \end{align*}
-    And so it becomes apparent how this notation is consistent with the change of variables formula.
+	It is left as an exercise to show that for $\Psi: V \to U$ a diffeomorphism between $V, U \subset \mathbb{R}^{n}$,
+	\begin{align*}
+		d \Psi_{1} \wedge d \Psi_{2} \wedge \cdots \wedge d \Psi_{n} = \det D \Psi(x) \cdot d x_{1} \wedge dx_{2} \wedge \cdots \wedge dx_{n}.
+	\end{align*}
+	And so it becomes apparent how this notation is consistent with the change of variables formula.
+
+	From now on, denote $ e^*_{I}(A)  := \det (e_{I}^\top A) = \omega_{I}(A) = dx_{I}(A)$ and these form a basis for all $k$-forms. The wedge factors we denote $e_{i}^* = dx_{i}$ such that $dx_{I} = e_{I}^* = \bigwedge dx_{i} = \bigwedge e_{i}^*$.
 \end{remark}
 
 \begin{lemma}[Double differential]\label{lem:double-diff}
-    Let $\alpha \in \Omega^{k}(U)$ with $U \subset \mathbb{R}^{n}$ open. Then $d(d\alpha ) \in \Omega^{k+2}(U)$ is identically $0$. Compactly, $d^{2} = 0$. 
+	Let $\alpha \in \Omega^{k}(U)$ with $U \subset \mathbb{R}^{n}$ open. Then $d(d\alpha ) \in \Omega^{k+2}(U)$ is identically $0$. Compactly, $d^{2} = 0$.
 \end{lemma}
 \begin{proof}
-    It suffices to check this at the basis vectors, so compute $d d(f(x) \omega_{I})$ for $f(x) = x_{i}$. 
-    \begin{align*}
-        d f \omega_{I} = \sum_{i=1}^{n} \partial_{i}f \, dx_{i} \wedge \omega_{I} \implies d(df) = \sum_{i=1}^{n}  \sum_{j=1}^{n} \partial_{j} \partial_{i} f \, dx_{j} \wedge dx_{i} \wedge \omega_{I}.
-    \end{align*}
-    As an exercise, one shows $dx_{j} \wedge dx_{i} = - dx_{i} \wedge dx_{j}$, and by Schwarz Theorem \ref{thm:schwarz}, the entire sum vanishes.
+	It suffices to check this at the basis vectors, so compute $d d(f \omega_{I})$ for $f: U \to \mathbb{R}$ smooth.
+	\begin{align*}
+		d (f \omega_{I}) = \left(\sum_{i=1}^{n} \partial_{i}f \, dx_{i}\right) \wedge \omega_{I} \implies d(df \omega_{I}) = \left(\sum_{i=1}^{n}  \sum_{j=1}^{n} \partial_{j} \partial_{i} f \, dx_{j} \wedge dx_{i}\right) \wedge \omega_{I}.
+	\end{align*}
+	As an exercise, one shows $dx_{j} \wedge dx_{i} = - dx_{i} \wedge dx_{j}$, and by Schwarz Theorem \ref{thm:schwarz}, the entire sum vanishes.
 \end{proof}
-
