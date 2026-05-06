@@ -17,7 +17,7 @@
 	It suffices to compute the Gram determinant. It requires a trick, but it's not instructive.
 \end{proof}
 
-\chapter{Global integral theorems}
+\chapter{Global integration theorems}
 
 The goal now is to show a lot of theorems for small open balls around individual points on a manifold. Then on \textit{compact} manifolds, which we will define later, we will be able to generalise the theorems easily.
 
@@ -27,6 +27,17 @@ We need to prepare definitions and Lemmas that will help us formulate the diverg
 
 \begin{definition}[Bounded $C^{k}$ domain]\label{def:bdd-ck-dom}
 	A bounded open set $\Omega \subset \mathbb{R}^{n}$ is called a bounded $C^{k}$ domain if $M = \partial \Omega$ is an $(n-1)$-dimensional manifold of class $C^{k}$.
+
+	Furthermore, we demand that $\partial \Omega$ is graphical. So for every point $p_{0} \in \partial \Omega$, there exists an isometry $F: \mathbb{R}^{n} \to \mathbb{R}^{n}$ and a ball $B_{r}(p_{0})$ such that
+	$$
+		F(\partial \Omega) \cap B_r(p_{0})=\left\{\left(x^{\prime}, x_n\right) \in V \times \mathbb{R} \mid x_n=g\left(x^{\prime}\right)\right\} \cap B_r(p_{0}) ;
+	$$
+	and
+	$$
+		F(\Omega) \cap B_r(p_{0})=F\left(\Omega \cap B_r(p_{0})\right)=\left\{\left(x^{\prime}, x_n\right) \in V \times \mathbb{R} \mid x_n<g\left(x^{\prime}\right)\right\} \cap B_r(p_{0}).
+	$$
+	Unless specified otherwise, we assume that $F = \text{id}$ for simplicity. The most general case will only come into play once we introduce graphical covers of submanifolds.
+	% todo: picture of a graphical domain like this
 \end{definition}
 
 \begin{definition}[Exterior and interior normal map]\label{def:ext-norm-map}
@@ -49,13 +60,9 @@ We need to prepare definitions and Lemmas that will help us formulate the diverg
 % \end{remark}
 
 \begin{lemma}[Exterior unit normal]\label{lem:ext-unit-norm}
-	Let $\Omega$ be a bounded $C^{1}$ domain, $p_{0} \in \partial \Omega$ the point we're focusing on and assume $\phi: V \to \mathbb{R}^{n}$ defined by $\phi(y) = (y, g(y))$ where $g: V \to \mathbb{R}$, with $V \subset \mathbb{R}^{n-1}$ open, is a graphical $C^{1}$ parametrisation of $M := \partial \Omega \cap B_{r}(p_{0})$ (including the technical note about the intersection, see Proposition \ref{prop:char-manifold}).
+	Let $\Omega$ be a bounded $C^{1}$ domain, $p_{0} \in \partial \Omega$ the point we're focusing on and assume $\phi: V \to \mathbb{R}^{n}$ defined by $\phi(y) = (y, g(y))$ where $g: V \to \mathbb{R}$, with $V \subset \mathbb{R}^{n-1}$ open, is a graphical $C^{1}$ parametrisation of $M := \partial \Omega \cap B_{r}(p_{0})$.
 
-	Suppose further that
-	\begin{align*}
-		\Omega \cap B_{r}(p_{0}) = \left\{ (y, x_{n}) \in \mathbb{R}^{n} \mid x_{n} < g(y) \right\} \cap B_{r}(p_{0})
-	\end{align*}
-	and define for $p = (y,g(y))$ the vector
+	Define for $p = (y,g(y))$ the vector
 	\begin{align*}
 		\nu(p) = \nu(y, g(y)) := \frac{(-\nabla g(y), 1)}{\sqrt{1 + \left| \nabla g(y) \right|^{2}}}.
 	\end{align*}
@@ -73,28 +80,26 @@ We need to prepare definitions and Lemmas that will help us formulate the diverg
 	\end{align*}
 	And so $\nu$ is perpendicular to all vectors in the tangent space. When you divide it by its length, you get a unit vector.
 
-	To prove it is exterior, consider that if we need to show $(y', y_{n}) = (y,g(y)) + h (-\nabla g(p), 1) \not \in \overline{ \Omega } $. For that, we would have to show that $y_{n} > g(y')$. But we can do a Taylor expansion (check details)
+	To prove it is exterior, consider that if we need to show $(y', y_{n}) = (y,g(y)) + h (-\nabla g(p), 1) \not \in \overline{ \Omega } $. For that, we would have to show that $y_{n} > g(y')$ (precisely because $\Omega$ is a $C^{1}$ domain that is \textit{not} rotated by $F$). But we can do a Taylor expansion (check details)
 	\begin{align*}
 		g(y') = g(y - h \nabla g(y)) = g(y) - \left| \nabla g(y) \right|^{2} h + \smalO(h) < g(y) + h.
 	\end{align*}
 	So for small enough $h$, the normal is exterior.
 \end{proof}
 
-I added one more thing that I thought would be useful when dealing with manifolds, which we could have introduced earlier but whatever.
-
 \begin{remark}[Uniqueness of the tangent space]
-	The definition of the tangent space $T_p M := \operatorname{Im}(D\varphi(u_0))$ (characterisation \ref{rem:parametrisation-tangent-space}) is independent of the choice of chart. Indeed, if $\varphi: U \to M$ and $\psi: V \to M$ are two charts with $\varphi(u_0)=\psi(v_0)=p$, then the transition map $\psi^{-1}\circ\varphi$ is a $C^1$-diffeomorphism. By the chain rule,
+	The definition of the tangent space $T_p M := \operatorname{Im}(D\varphi(u_0))$ (characterisation \ref{rem:parametrisation-tangent-space}) is independent of the choice of chart. Indeed, if $\varphi: U \to M$ and $\psi: V \to M$ are two charts with $\varphi(u_0)=\psi(v_0)=p$, then the transition map $\psi^{-1}\circ\varphi$ is a $C^1$-diffeomorphism (\ref{rem:reparam}). By the chain rule,
 	\[
 		D\varphi(u_0) = D\psi(v_0)\, D(\psi^{-1}\circ\varphi)(u_0).
 	\]
-	Since $D(\psi^{-1}\circ\varphi)(u_0)$ is invertible, the domains ultimately coincide and the images
+	Since $D(\psi^{-1}\circ\varphi)$ is invertible, the domains ultimately coincide and the images equal
 	\[
 		D\varphi(U) = D\psi(V).
 	\]
 \end{remark}
 
 \begin{definition}[Exterior unit map]\label{def:ext-unit-map}
-	If $\Omega \subset \mathbb{R}^n$ is a bounded $C^1$ domain, the continuous map $\nu: \partial \Omega \rightarrow \mathbb{S}^{n-1}$ assigning to each point $p \in \partial \Omega$ the exterior normal vector at $p$ is called exterior unit normal map. Notice that since the tangent space at a point of a manifold is defined uniquely, the map is unique to each manifold.
+	If $\Omega \subset \mathbb{R}^n$ is a bounded $C^1$ domain, the continuous map $\nu: \partial \Omega \rightarrow \mathbb{S}^{n-1}$ assigning to each point $p \in \partial \Omega$ the exterior normal vector at $p$ is called exterior unit normal map (if it exists, we will repeatedly use \ref{lem:ext-unit-norm} for the simplified domain). Notice that since the tangent space at a point of a manifold is defined uniquely, the map is unique to each manifold.
 \end{definition}
 
 \begin{remark}[$C^{k}$ function on non-open domains]
@@ -107,7 +112,8 @@ I added one more thing that I thought would be useful when dealing with manifold
 
 We are now in a position to prove a weaker version of the divergence theorem. We will prove theorems using always one particular parametrisation, but don't forget that we put in the work last chapter and defined \ref{def:int-subm} and \ref{def:d-vol} such that they are invariant under such reparametrisations and also isometries.
 
-This will be the setup for every Proposition in the following section. Let $\Omega$ be a bounded $C^{1}$ domain, $p_{0} \in \partial \Omega$. Consider the locally graphically parametrised manifold $M := \partial \Omega \cap B_{r}(p_{0})$ and let $\nu$ denote its unit exterior normal map. Suppose also that
+This will be the setup for every Proposition in the following section. Let $\Omega$ be a bounded $C^{1}$ domain, $p_{0} \in \partial \Omega$. Consider the locally graphically parametrised manifold $M := \partial \Omega \cap B_{r}(p_{0})$
+and let $\nu$ denote its unit exterior normal map (exists by \ref{lem:ext-unit-norm}). From the definition of $C^{1}$ domain, we also have
 \begin{align*}
 	\Omega \cap B_{r}(p_{0}) = \left\{ (y, x_{n}) \in \mathbb{R}^{n} \mid x_{n} < g(y) \right\} \cap B_{r}(p_{0}),
 \end{align*}

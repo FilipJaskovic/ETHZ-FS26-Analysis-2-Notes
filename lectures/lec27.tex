@@ -36,7 +36,7 @@
 	Given a graphical cover $\phi_{\ell}: V_{\ell} \rightarrow \mathbb{R}^n, 1 \leq \ell \leq N$, let $\eta_{\ell}: \mathbb{R}^n \rightarrow[0, \infty)$ be a partition of unity (exists by Lemma \ref{lem:part-of-unity}) on $M$ w.r.t. the balls $\left\{B_{r_{\ell}}\left(p_{\ell}\right)\right\}_{1 \leq \ell \leq N}$ associated to the graphical cover. We define:
 	$$
 		\begin{aligned}
-			\int_M f \, d \operatorname{vol}_d & :=\sum_{\ell=1}^N \int_{M \cap B_{\ell}\left(x_{\ell}\right)} f \eta_{\ell} \, d \operatorname{vol}_d,
+			\int_M f \, d \text{vol}_d & :=\sum_{\ell=1}^N \int_{M \cap B_{\ell}\left(x_{\ell}\right)} f \eta_{\ell} \, d \text{vol}_d,
 		\end{aligned}
 	$$
     where the second integral is defined by \ref{def:int-subm}. 
@@ -48,7 +48,7 @@ This was totally skipped in the lecture, we just moved onto the divergence theor
 
 \section{Global divergence theorem}
 
-Now we can prove the full correct version.
+Now we can prove the full correct version, for $C^{1}$ domains with \textit{any} isometry $F$. 
 
 \begin{theorem}[Divergence theorem]\label{thm:div-thm}
 	Let $\Omega \subset \mathbb{R}^{n}$ be a bounded $C^{1}$ domain. Let $F \in C^{1}(\overline{ \Omega }, \mathbb{R}^{n} )$ be a vector field. Then

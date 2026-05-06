@@ -17,6 +17,7 @@
 \usepackage{float}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{soul}
 \setlist[enumerate]{label=(\arabic*)}
 
 % changed here
@@ -146,11 +147,11 @@
 
 \tcbset{
 	mytheoremstyle/.style={
-		enhanced,
-		breakable,
-		coltitle=black,
-		fonttitle=\normalfont\scshape,
-	}
+			enhanced,
+			breakable,
+			coltitle=black,
+			fonttitle=\normalfont\scshape,
+		}
 }
 
 % Internal tcolorbox theorem environments.
@@ -223,29 +224,29 @@
 \makeatletter
 \providecommand*{\theHtcb@cnt@tcbtheorem}{}
 \renewcommand*{\theHtcb@cnt@tcbtheorem}{\thechapter.\arabic{tcb@cnt@tcbtheorem}}
-\makeatother 
+\makeatother
 
 % Explanation: gray box.
 \newenvironment{explanation}[1][]{%
 	\begin{tcolorbox}[
-		mytheoremstyle,
-		colframe=ExplFrame,
-		colback=ExplBack,
-		title={Explanation},
-	]
-}{%
+			mytheoremstyle,
+			colframe=ExplFrame,
+			colback=ExplBack,
+			title={Explanation},
+		]
+		}{%
 	\end{tcolorbox}
 }
 
 \newcounter{lecexercise}[chapter]
 
 \newenvironment{lecexercise}[1][]{%
-    \refstepcounter{lecexercise}%
-    \par\smallskip
-    \noindent\textsc{Exercise.}%
-    \if\relax\detokenize{#1}\relax\else\ \textit{#1}\fi\quad
+	\refstepcounter{lecexercise}%
+	\par\smallskip
+	\noindent\textsc{Exercise.}%
+	\if\relax\detokenize{#1}\relax\else\ \textit{#1}\fi\quad
 }{%
-    \par\smallskip
+	\par\smallskip
 }
 
 
@@ -354,12 +355,12 @@
 }
 
 \newcommand\smalO{
-  \mathchoice
-    {{\scriptstyle\mathcal{O}}}% \displaystyle
-    {{\scriptstyle\mathcal{O}}}% \textstyle
-    {{\scriptscriptstyle\mathcal{O}}}% \scriptstyle
-    {\scalebox{.7}{$\scriptscriptstyle\mathcal{O}$}}%\scriptscriptstyle
-  }
+	\mathchoice
+	{{\scriptstyle\mathcal{O}}}% \displaystyle
+	{{\scriptstyle\mathcal{O}}}% \textstyle
+	{{\scriptscriptstyle\mathcal{O}}}% \scriptstyle
+	{\scalebox{.7}{$\scriptscriptstyle\mathcal{O}$}}%\scriptscriptstyle
+}
 \usepackage{import}
 
 \graphicspath{{fig/}}

@@ -110,10 +110,10 @@ Now this we can extend to general dimensions. Notation-wise, when I say $M$ is \
 	But then the respective definitions of the $d$-volumes match.
 \end{proof}
 
-\begin{remark}[The issue with reparametrisation]
+\begin{remark}[The issue with reparametrisation]\label{rem:reparam}
 	Assume we are given multiple parametrisations for parts of a manifold that might intersect. In particular, assume we have some manifold $M$ and that we have $\phi_{i}: V_{i} \to M \cap W_{i}$ for $i = 1,2$. It is possible that $\widetilde{M} := M \cap (W_{1} \cap W_{2}) \neq \emptyset$. In general, the $d$-volume of $\phi$ and $\psi$ will not be the same, because they don't even look at the same parts of a manifold. What really matters is that they align on the part of the manifold where they intersect.
 
-	We check this by redefining the parametrisation $\phi_{i}: \widetilde{V}_{i} \to \widetilde{M}$ with $\widetilde{V}_{i} = \phi_{i}^{-1}(\widetilde{M})$. Then we define $\psi = \phi_{2}^{-1} \circ \phi_{1}: \widetilde{V}_{1} \to \widetilde{V}_{2}$, which is of class $C^{1}$ (check course notes). And so it remains to show the $d$-volume is invariant under the reparametrisation with this $\psi$, which we know is true by \ref{lem:invar-repar}.
+	We check this by redefining the parametrisations $\tilde{\phi}_{i}: \widetilde{V}_{i} \to \widetilde{M}$ with $\widetilde{V}_{i} = \phi_{i}^{-1}(\widetilde{M})$. Then we define $\psi = \tilde{\phi}_{2}^{-1} \circ \tilde{\phi}_{1}: \widetilde{V}_{1} \to \widetilde{V}_{2}$, which is of class $C^{1}$ (see lecture notes for proof). And so it remains to show the $d$-volume is invariant under the reparametrisation with this $\psi$, which we know is true by \ref{lem:invar-repar}.
 \end{remark}
 
 \begin{lemma}[Invariance under orthogonal transformations]\label{lem:inv-ortho-trans}

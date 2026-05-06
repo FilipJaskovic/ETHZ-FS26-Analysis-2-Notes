@@ -1,0 +1,153 @@
+\begin{prop}[Exterior normal map vs orientability]\label{prop:norm-orient}
+	$M \subset \mathbb{R}^{n}$, an $n-1$-dimensional submanifold is orientable if and only if there exists a map $\nu: M \to \mathbb{S}^{n-1}$ that is continuous and satisfies $\nu(p) \perp T_{p}M$.
+\end{prop}
+\begin{proof}
+	$\implies$: For $U$ a local neighborhood of a point $p \in M$, given some local parametrisation $\phi: V \subset \mathbb{R}^{n-1} \to M \cap U$, define $\nu_{\phi}(\phi(y))$ as the unique unit vector normal to $T_{p}M$ such that
+	\begin{align*}
+		\det (\nu_{\phi}(\phi(y)), \partial_{1}\phi(y), \dots, \partial_{n-1}\phi(y)) > 0.
+	\end{align*}
+	This of course exists, because $\nu$ is orthogonal to all the partial derivatives, hence the determinant is non-zero and we can either leave the sign of $\nu$ unchanged or flip it, multilinearity of the determinant takes care of the rest. This assignment is in particular continuous, because the partial derivatives are. By linear algebra, there is a system of linear equations to solve for $\nu$, but that depends continuously on the partials, hence continuity.
+
+	Now we have to show that the definition of $\nu$ agrees on the overlaps of parametrisations. So let $\phi_{i}, \phi_{j}$ be two parametrisations and $\phi_{i}(y) = \phi_{j}(x) = p \in M$ and $\psi$ a reparametrisation from \ref{rem:reparam}. Since the partial derivatives of the parametrisation span the same tangent space, we only have to worry about the sign of $\nu$. By chain rule,
+	\begin{align*}
+		(\nu_{\phi_{i}}(p), D \phi_{j}(x)) =
+		\begin{pmatrix}
+			1 & 0        \\
+			0 & D\psi(y) \\
+		\end{pmatrix} (\nu_{\phi_{i}}(p), D\phi_{i}(y)).
+	\end{align*}
+	But the determinant of the matrix in the middle is $\det D \psi > 0$, so $\nu_{\phi_{j}}$ will experience the same sign flip regardless of the parametrisation (exercise: figure it out for yourself). Hence $\nu := \nu_{\phi_{i}}$ is well-defined and continuous.
+
+	$\impliedby$: Conversely, assume that we know $\nu$ is continuous and consider any parametrisations of the manifold ${\phi}_{i}: V_{i} \to M \cap U_{i}$. For each $\phi_{i}$, look at the $n \times n$ matrix $(\nu(\phi_{i}(y)), D {\phi}_{i})(y)$ for some $y \in V$. If its determinant is positive, do nothing, but if it's negative, replace ${\phi}_{i}$ by ${\phi}_{i} \circ \rho$, where $\rho(x_{1}, \dots, x_{n-1}) = (-x_{1}, \dots, x_{n-1})$. The rest then follows from computing and using the assumption, it's not very exciting. The chain rule equality above once again determines the sign of $D\psi$, so it's the same argument.
+\end{proof}
+
+\begin{definition}[Integral of a form over a compact oriented submanifold]\label{def:int-form-comp-or-man}
+	Let $M \subset \mathbb{R}^{n}$ be a compact, $m$-dimensional oriented submanifold and let $\phi_{i}: V_{i} \to M \cap U_{i}$ be its parametrisations (that satisfy orientability) and $\eta_{i}$ their partition of unity (see \ref{lem:graph-cov-subm}). Let $\alpha \in \Omega^{m}(U)$ for some $U \subset \mathbb{R}^{n}$ open that contains $M$. Then define
+	\begin{align*}
+		\int_{M} \alpha := \sum_{i=1}^{N} \int_{V_{i}} \phi_{i}^*(\alpha_{i} \eta_{i})\, dy = \sum_{i=1}^{N} \int_{V_{i}} (\eta_{i} \circ \phi_{i})(y) \cdot  \alpha_{\phi_{i}(y)}(D \phi_{i}(y)) \, dy.
+	\end{align*}
+\end{definition}
+
+We want to reformulate the divergence theorem from the language of vector fields to the language of differential forms. We have seen for instance that $F^\top $ defines a $1$-form for any vector field $F$. How can we transform $F$ into an $n-1$ form? One option is to define for each $n-1 \times n-1$ matrix $T$ with columns $T_{i}$, the $n-1$-form $\alpha_{x}(T_{1}, \dots, T_{n-1}) := \det (F(x), T_{1}, \dots, T_{n-1}). $
+
+\begin{remark}[Expression of the induced $n-1$ form with basis forms]\label{rem:n1-forms-vecf}
+	For $F$ a smooth vector field and $\alpha_{F}$ defined as above,
+	\begin{align*}
+		\alpha_{F} = \sum_{i=1}^{n} (-1)^{i+1} F_{i}(x) \, d x_{1} \wedge  \dots \wedge \widehat{dx_{i}} \wedge \dots \wedge dx_{n},
+	\end{align*}
+	where the hat indicates that the factor has been omitted. This is almost immediate if one does the cofactor expansion of $(F(x), T)$. Conversely, every $n-1$ form can be expressed like this using a smooth vector field $F = (c_{1}, -c_{2}, \dots, (-1)^{i+1} c_{i}, \dots, (-1)^{n+1} c_{n})$.
+
+	Additionally, $d\alpha_{F} = \operatorname{div}(F) \, dx_{1} \wedge \dots \wedge dx_{n}$, which one also verifies as an exercise.
+\end{remark}
+
+\newpage
+
+\section{Stokes Theorem}
+
+With the tool of differential forms, we can prove a very powerful theorem that is even more general than the divergence theorem for bounded $C^{1}$ domains. There, we had the restriction that the boundary $\partial \Omega$ should be $n-1$ dimensional, but here we go beyond that.
+
+\begin{theorem}[Divergence Theorem in differential forms]\label{thm:div-thm-diffforms}
+	Let $U \subset \mathbb{R}^{m}$ be a bounded $C^{1}$ domain and $\alpha \in \Omega^{m-1}(U)$ that has support contained in $U$. Then
+	\begin{align*}
+		\int_{U} d \alpha  = \int_{\partial U} \alpha,
+	\end{align*}
+	where $\partial U$ is oriented by the exterior unit normal $\nu$, which exists by \ref{lem:ext-unit-norm}.
+\end{theorem}
+\begin{proof}
+	First, using \ref{rem:n1-forms-vecf}, we assign $\alpha \equiv \alpha_{F}$ a vector field $F \in C^{\infty}(U, \mathbb{R}^{n})$, giving us immediately $d\alpha = \operatorname{div}(F) \, d x_{1} \wedge \cdots \wedge dx_{n}$, hence
+	\begin{align*}
+		\int_{U} d\alpha = \int_{U} \operatorname{div}(F) \, dx = \int_{\partial U} F \cdot \nu \, d \text{vol}_{m-1},
+	\end{align*}
+	which holds by the Divergence Theorem \ref{thm:div-thm}.
+
+	Now we move into a local area on the manifold and prove the theorem there, then it extends trivially to the whole thing. Take a parametrisation $\phi: V \to \partial U$ that by the proof of \ref{prop:norm-orient} satisfies
+	\begin{align*}
+		\det (\nu(\phi(y)), \partial_{1} \phi(y), \dots, \partial_{n-1} \phi(y)) > 0.
+	\end{align*}
+	But we claim that this is actually equal to the Gram determinant. And indeed, since it is (crucially) positive, we can square and get
+	\begin{align*}
+		\det (\nu, D \phi)^{2} = \det ((\nu, D\phi^\top )^\top \cdot (\nu, D\phi)) = \det
+		\begin{pmatrix}
+			1 & 0                \\
+			0 & D\phi^\top D\phi
+		\end{pmatrix}
+		= \det (D\phi^\top D\phi),
+	\end{align*}
+	applying the fact that $\nu$ is normal to all partials and unit length.
+
+	Now, by definition of $\alpha $, we have
+	\begin{align*}
+		\alpha_{\phi(y)}(D\phi(y)) = \det (F, D \phi) = \det (\nu \cdot (F \cdot \nu), D\phi) = (F \cdot \nu) \cdot \det (\nu, D\phi) = (F \cdot \nu) \cdot \sqrt{D\phi^\top D\phi},
+	\end{align*}
+	where we again crucially used that $\nu$ is normal to the partials, hence only the normal part contributes to the determinant in the second equality. Then we pulled out using multi-linearity. Therefore,
+	\begin{align*}
+		\phi^* \alpha = F(\phi(y)) \cdot \nu(\phi(y)) \, \sqrt{D\phi^\top D\phi} \, dy_{1} \wedge \cdots \wedge dy_{m-1}.
+	\end{align*}
+	Hence
+	\begin{align*}
+		\int_{\partial U} \alpha = \int_{V} \phi^* \alpha  = \int_{V} F \circ \phi \cdot  \sqrt{D\phi^\top D\phi} \, dy = \int_{\partial U} F \cdot \nu \, d \text{vol}_{m-1}.
+	\end{align*}
+\end{proof}
+
+\newpage
+
+\begin{definition}[Parametrised submanifold with boundary]\label{def:param-subm-boundary}
+	We say that $M \subset \mathbb{R}^{n}$ is a parametrised $m$-dimensional submanifold with a boundary if there exists a (any) parametrised $m$-submanifold $\phi: V \subset \mathbb{R}^{m} \to \mathbb{R}^{n}$ and a bounded $C^{1}$ domain $U \subset \mathbb{R}^{m}$ with $\overline{ U } \subset V$ such that $M = \phi(U)$.
+
+	The \textit{manifold} boundary of $M$ is then defined as $\partial M := \phi(\partial U)$.
+
+	A word on orientations (ask the professor):
+	The orientation of $M$ is inherited from $\phi(V)$. $\partial M$ has its orientation induced by $\partial U$. That is, at some point $p = \phi(y) \in \partial M$, the unit normal is the normalised vector $D\phi(y) \nu(y)$, where $\nu(y)$ is the normal to $\partial U$ at $y \in \partial U$.
+\end{definition}
+
+\begin{theorem}[Generalised Stokes Theorem]\label{thm:stokes}
+	Let $M \subset \mathbb{R}^{n}$ be a parametrised oriented $m$-submanifold with manifold boundary $\partial M$ and $\alpha \in \Omega^{m-1}(\mathbb{R}^{n})$ that has compact support contained in $M$. Then
+	\begin{align*}
+		\int_{\partial M} \alpha = \int_{M} d\alpha .
+	\end{align*}
+\end{theorem}
+\begin{proof}
+	By definition and since the differential commutes with the pullback (\ref{prop:pullback-commutes}),
+	\begin{align*}
+		\int_{M} d\alpha = \int_{U} \phi^*(d\alpha) = \int_{U} d \phi^*\alpha .
+	\end{align*}
+	To this, we can apply the divergence theorem in $\mathbb{R}^{m}$ to get
+	\begin{align*}
+		\int_{U} d \phi^*\alpha  = \int_{\partial U} \phi^*\alpha .
+	\end{align*}
+	And (I suppose) since $\partial M$ is constructed to be positively oriented via $\phi$, nothing stops us from applying the definition to get
+	\begin{align*}
+		\int_{\partial U} \phi^*\alpha = \int_{\partial M} \alpha.
+	\end{align*}
+	Tracing back the chain of equalities, we get the Theorem.
+\end{proof}
+
+A corollary is the Stokes theorem from physics which we've come to love so much.
+
+\begin{definition}[Rotation in $\mathbb{R}^{3}$]\label{def:rot-3}
+	Let $F \in C^{\infty}(\mathbb{R}^{3}, \mathbb{R}^{3})$. We define the rotation of $F$ as
+	\begin{align*}
+		\operatorname{rot} (F) = (\partial_{2}F_{3} - \partial_{3}F_{2}, \partial_{3}F_{1} - \partial_{1} F_{3}, \partial_{1} F_{2} - \partial_{2} F_{1}).
+	\end{align*}
+	From the perspective of differential forms, one computes that $\operatorname{rot} (F) = d(F^\top )$, where $F^\top = F_{1}\, dx_{1} + F_{2} \, dx_{2} + F_{3} \, dx_{3}$.
+\end{definition}
+
+\begin{theorem}[Stokes in $\mathbb{R}^{3}$]\label{thm:stokes-3}
+	Let $ \Sigma \subset \mathbb{R}^{3}$ be a $2$-dimensional parametrised submanifold with manifold boundary $\partial \Sigma$ and $F \in C^{\infty}(\mathbb{R}^{3}, \mathbb{R}^{3})$. Then
+	\begin{align*}
+		\int_{\Sigma } \operatorname{rot} (F) \cdot \nu \, dS = \int_{\partial \Sigma } F^\top =: \int_{\partial \Sigma } F \, dL,
+	\end{align*}
+	A physicist writes $F \, dL$ for the dot product between $F$ and a line element $dL$.
+\end{theorem}
+\begin{proof}
+    Let $\alpha = F^\top $ be the differential form. Then the only thing that is left to verify is that
+    \begin{align*}
+        \int_{\Sigma } \operatorname{rot} (F) \cdot \nu \, dS = \int_{\Sigma } d\alpha.
+    \end{align*}
+    Indeed, if we feed the Jacobi matrix of some positively oriented parametrisation $\phi$ to $d\alpha $, we get
+    \begin{align*}
+        d\alpha_{\phi(y)} (D \phi(y)) = \det ( \operatorname{rot} (F \circ \phi(y)), D\phi(y)) = \operatorname{rot} (F) \cdot (\partial_{1} \phi \times \partial_{2}\phi).
+    \end{align*}
+\end{proof}
+
+
