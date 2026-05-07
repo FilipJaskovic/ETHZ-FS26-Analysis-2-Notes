@@ -6,3 +6,119 @@
 
 \chapter{Ordinary Differential Equations}
 
+This part is a bit self-contained and independent of the rest of the course. The goal is to finish off ordinary differential equations with this for good.
+
+\section{Constant coefficient linear equations}
+
+We start with the simplest type of ODE that actually has a complete answer to existence and uniqueness of solutions.
+
+\begin{definition}[Constant coefficient linear ODE]\label{def:const-lin-ode}
+   A differential equation for $y: I \to \mathbb{R}$ of class $C^{m}$ (sometimes the codomain is just $\mathbb{C}$) where $I \subset \mathbb{R}$ is an interval, is constant coefficient and linear if it is of the form
+    \begin{align*}
+        \sum_{i=0}^{m} a_{i}y^{(i)}(t) = f(t) \quad \forall t \in I,
+    \end{align*}
+    where $f: I \to \mathbb{R}$ is class $C^{0}$, the coefficients $a_{i}$ are in $\mathbb{R}$ and $a_{m} = 1$. We call $m$ the order of the equation.
+\end{definition}
+
+\begin{definition}[Characteristic polynomial of constant linear ODE]\label{def:char-poly}
+    The characteristic polynomial of constant linear ODE $\sum_{i=0}^{m} a_{i}y^{(i)}(t) = f(t)$ is defined as $p(X) = \sum_{i=0}^{m} a_{i}X^{i}$. Sometimes we summarise the differential equation as the linear operator $L = p\left( \frac{d}{dt} \right) = \sum_{i=0}^{m} a_{i}\left( \frac{d}{dt} \right)^{i}$, i.e. a linear homomorphism $C^{m}(I) \to C^{m}(I)$. Because then the ODE can be written compactly as $Ly = f$.
+\end{definition}
+
+\begin{definition}[Homogeneous ODE]\label{def:homogen-ode}
+    The differential equation $L z = 0$ for $z: I \to \mathbb{C}$ is called the homogeneous ODE. The space of solutions to this equation $V = \text{Ker}(L)$ forms a vector space over $\mathbb{C}$.
+\end{definition}
+
+The goal for today is to completely characterise this space $V$. Being good at linear algebra, we know that all there really is to know is the basis for this space. So that's what we will be looking for. 
+
+We start with the Ansatz $z(t) = \text{exp}(\alpha t)$ for $\alpha \in \mathbb{C}$ and notice this satisfies $\left( \frac{d}{dt} \right)^{k} z(t) = \alpha^{k} z(t)$. Hence
+\begin{align*}
+    Lz = p \left( \frac{d}{dt} \right) z = \left( \sum_{i=0}^{m} a_{i} \alpha^{i} \right)  z(t) = p(\alpha ) z(t) = 0
+\end{align*}
+if $\alpha$ is root of $p$. 
+
+So for a typical polynomial $p$ with $m$ \textit{distinct} roots $\left\{ \alpha_{1}, \dots, \alpha_{m} \right\}$, we discover that $\dim V \geq m$ (show as an exercise that the solutions for different $\alpha_{i}$ are linearly independent).
+
+However, what happens when there are roots of $p$ that have multiplicity? Notice that for $k \geq 2$,
+\begin{align*}
+    \left( \frac{d}{dt} - \alpha  \right)^{k} (t^{k-1} \text{exp}(\alpha t)) &= \left( \frac{d}{dt} - \alpha  \right)^{k-1}\left( \frac{d}{dt} - \alpha \right)(t^{k-1} \text{exp}(\alpha t)) \\ 
+    &= \left( \frac{d}{dt} - \alpha  \right)^{k-1} ((k-1) t^{k-2} \text{exp}(\alpha t) - \alpha t^{k-1} \text{exp}(\alpha t) + t^{k-1}\alpha \cdot \text{exp}(\alpha t)),
+\end{align*}
+the terms cancel and we can apply induction. Hence $\left( \frac{d}{dt} - \alpha  \right)^{k}(t^{k-1} \text{exp}(\alpha t)) = 0$ for $k \geq 2$ (if $k=0,1$ anyway). 
+
+\begin{lemma}[Poly-exp form]\label{lem:polyexp}
+    Consider a differential equation with characteristic polynomial $p(X) = \prod_{j=1}^{k}(X-\alpha_{j})^{m_{j}}$, which has degree $m = \sum_{j=1}^{k} m_{j}$. Then for a fixed $1 \leq j \leq k$,
+    \begin{align*}
+        p \left( \frac{d}{dt} \right) (t^{k} \text{exp}(\alpha_{j} t)) = 0 \quad \forall 0 \leq k \leq m_{j}-1.
+    \end{align*}
+    If as an exercise, one proves these functions are all linearly independent, we can conclude that $\dim V \geq \text{deg}(p)$ in \textit{any} case.
+\end{lemma}
+\begin{proof}
+    Fix a $j$ and a fitting $k$. Factorise the characteristic polynomial as
+    \begin{align*}
+        p \left( \frac{d}{dt} \right) = \left( \frac{d}{dt} - \alpha_{j} \right)^{m_{j}} \prod_{\ell \neq j} \left( \frac{d}{dt} - \alpha_{\ell} \right)^{m_{\ell}}.
+    \end{align*}
+    Hence
+    \begin{align*}
+        p \left( \frac{d}{dt} \right) \left( t^{k} \text{exp}(\alpha_{j} t) \right) = \left( \frac{d}{dt} - \alpha_{j} \right)^{m_{j}} \left( t^{k} \text{exp}(\alpha_{j} t) \right) \cdot (\cdots) = 0,
+    \end{align*}
+    as we found above. 
+\end{proof}
+
+The rest of the work today will go into showing that $\dim V \leq \text{deg}(p)$ to complete the theory of linear constant coefficient ODEs.
+
+\begin{lemma}[Grönwell inequality]\label{lem:gronwall}
+    Let $u \in C^{1}([a,b])$ such that $u'(t) \leq \beta(t) u(t)\; \forall t \in [a,b]$, where $\beta \in C^{0}([a,b])$. Then 
+    \begin{align*}
+        u(t) \leq u(a) \cdot \text{exp}\left( \int_{a}^{t} \beta (s) \, ds \right) \quad \forall t \in [a,b].
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    Define $v(t) = \text{exp}\left( \int_{a}^{t} \beta (s) \, ds \right) \in C^{1}([a,b])$. By FTC, this satisfies $v'(t) = \beta (t)v(t)$. Take $\phi(t) := \frac{u(t)}{v(t)}$. Using the assumption,
+    \begin{align*}
+        \phi'(t) = \frac{u'(t)v(t) - u(t)v'(t)}{v(t)^{2}} \leq \frac{\beta (t) u(t)v(t) - u(t) \beta (t) v(t)}{v(t)^{2}} = 0.
+    \end{align*}
+    Hence $\phi(t) \leq \phi(a) \; \forall t \in [a,b]$. But when you plug in the definition for $\phi$, you get $\frac{u(t)}{v(t)} \leq \frac{u(a)}{1}$, which is just the statement.
+\end{proof}
+
+\begin{lemma}[Zero in, zero out]\label{lem:zero-in-out}
+    Consider a differential equation for $w: I \to \mathbb{C}$ with characteristic polynomial $p(X) = \prod_{j=1}^{k}(X-\alpha_{j})^{m_{j}}$ and let $t_{0} \in I$ and the \textit{initial value problem} (IVP)
+    \begin{align*}
+        \begin{cases}
+            Lw(t) = 0 \quad \forall t \in I \\ 
+            w^{(j)}(t_{0}) = 0 \quad \forall 0 \leq j \leq m-1
+        \end{cases}
+    \end{align*}
+    Then $z \equiv  0$ is the unique solution.
+\end{lemma}
+\begin{proof}
+    Consider $u(t) = \sum_{i=0}^{m-1} (w^{(i)}(t))^{2}$. Then
+    \begin{align*}
+        u'(t) = 2w^{(m-1)}(t) \cdot w^{(m)}(t) + \sum_{i=0}^{m-2} 2 w^{(i)}(t) \cdot w^{(i+1)}(t) = 0.
+    \end{align*}
+    Because $Lw = 0$, $w^{(m)}(t) = - \sum_{i=0}^{m-1} a_{i}w^{(i)}(t)$ and we can bound
+    \begin{align*}
+        \left| w^{(m)}(t) \right| \leq C \sum_{i=0}^{m-1} \left| w^{(i)}(t) \right|,
+    \end{align*}
+    with $C = \max_{i} \left| a_{i} \right|$. Hence by $2ab \leq a^{2}+b^{2}$ (or Cauchy-Schwartz \ref{lem:cauchy-schwartz}),
+    \begin{align*}
+        u'(t) \leq \sum_{i=0}^{m-2} (w^{(i)}(t))^{2} + \sum_{i=0}^{m-1} (w^{(u+1)}(t))^{2} + 2 C \left( \sum_{i=0}^{m-1} w^{(i)}(t) \right)^{2} \leq 2u(t) + 2C m u(t) = 2(1+ Cm)u(t).
+    \end{align*}
+    Applying Grönwall \ref{lem:gronwall}, we get $0 \leq u(t) \leq u(t_{0}) \cdot \text{exp}(\overline{ C } (t-t_{0}))$ for $\overline{ C } = 2(1+Cm)$. But since $u(t_{0}) = 0$, we conclude $u(t) = 0$.
+\end{proof}
+
+\begin{prop}[Initial value problem]\label{prop:init-val-prob}
+    Consider a differential equation for $z: I \to \mathbb{C}$ with characteristic polynomial $p(X) = \prod_{j=1}^{k}(X-\alpha_{j})^{m_{j}}$ and let $t_{0} \in I$. Consider the initial value problem 
+    \begin{align*}
+        \begin{cases}
+            Lz(t) = 0 \quad \forall t \in I \\ 
+            z^{(j)}(t_{0}) = w_{j} \quad \forall 0 \leq j \leq m-1
+        \end{cases}
+    \end{align*}
+    for $w_{j} \in \mathbb{C}$. It has a \textit{unique} solution.
+\end{prop}
+\begin{proof}
+    Consider the homomorphism $T: V \to \mathbb{C}^{m}: z \mapsto (z(t_{0}), z^{(1)}(t_{0}), \dots, z^{(m-1)}(t_{0}))$. By Lemma \ref{lem:zero-in-out}, $\text{Ker}(T) = 0$. Thus $T$ is an injective homomorphism from $V$ to $\mathbb{C}^{m}$. But that means $\dim V \leq \dim \mathbb{C}^{m} = m$.
+    
+    By Lemma \ref{lem:polyexp}, $\dim V = m$ and $T$ is an isomorphism assigning each IVP a unique solution.
+\end{proof}
+

@@ -33,7 +33,7 @@ We want to reformulate the divergence theorem from the language of vector fields
 \begin{remark}[Expression of the induced $n-1$ form with basis forms]\label{rem:n1-forms-vecf}
 	For $F$ a smooth vector field and $\alpha_{F}$ defined as above,
 	\begin{align*}
-		\alpha_{F} = \sum_{i=1}^{n} (-1)^{i+1} F_{i}(x) \, d x_{1} \wedge  \dots \wedge \widehat{dx_{i}} \wedge \dots \wedge dx_{n},
+		\alpha_{F} = \sum_{i=1}^{n} (-1)^{i+1} F_{i}(x) \, dx_{1} \wedge  \dots \wedge \widehat{dx_{i}} \wedge \dots \wedge dx_{n},
 	\end{align*}
 	where the hat indicates that the factor has been omitted. This is almost immediate if one does the cofactor expansion of $(F(x), T)$. Conversely, every $n-1$ form can be expressed like this using a smooth vector field $F = (c_{1}, -c_{2}, \dots, (-1)^{i+1} c_{i}, \dots, (-1)^{n+1} c_{n})$.
 
@@ -51,7 +51,7 @@ With the tool of differential forms, we can prove a very powerful theorem that i
 	\begin{align*}
 		\int_{U} d \alpha  = \int_{\partial U} \alpha,
 	\end{align*}
-	where $\partial U$ is oriented by the exterior unit normal $\nu$, which exists by \ref{lem:ext-unit-norm}.
+	where $\partial U$ is oriented by the exterior unit normal $\nu$, which exists by \ref{lem:ext-unit-norm}. I.e. $\partial U$ has charts $\phi_{i}$ such that they suffice the construction in Proposition \ref{prop:norm-orient} w.r.t. the normal from \ref{lem:ext-unit-norm} and the chart transition maps are in particular positive.
 \end{theorem}
 \begin{proof}
 	First, using \ref{rem:n1-forms-vecf}, we assign $\alpha \equiv \alpha_{F}$ a vector field $F \in C^{\infty}(U, \mathbb{R}^{n})$, giving us immediately $d\alpha = \operatorname{div}(F) \, d x_{1} \wedge \cdots \wedge dx_{n}$, hence
@@ -60,7 +60,7 @@ With the tool of differential forms, we can prove a very powerful theorem that i
 	\end{align*}
 	which holds by the Divergence Theorem \ref{thm:div-thm}.
 
-	Now we move into a local area on the manifold and prove the theorem there, then it extends trivially to the whole thing. Take a parametrisation $\phi: V \to \partial U$ that by the proof of \ref{prop:norm-orient} satisfies
+	Now we move into a local area on the manifold and prove the theorem there, then it extends trivially to the whole thing. Take a parametrisation $\phi: V \to \partial U$ that by assumption satisfies
 	\begin{align*}
 		\det (\nu(\phi(y)), \partial_{1} \phi(y), \dots, \partial_{n-1} \phi(y)) > 0.
 	\end{align*}
@@ -95,15 +95,14 @@ With the tool of differential forms, we can prove a very powerful theorem that i
 	We say that $M \subset \mathbb{R}^{n}$ is a parametrised $m$-dimensional submanifold with a boundary if there exists a (any) parametrised $m$-submanifold $\phi: V \subset \mathbb{R}^{m} \to \mathbb{R}^{n}$ and a bounded $C^{1}$ domain $U \subset \mathbb{R}^{m}$ with $\overline{ U } \subset V$ such that $M = \phi(U)$.
 
 	The \textit{manifold} boundary of $M$ is then defined as $\partial M := \phi(\partial U)$.
-
-	A word on orientations (ask the professor):
-	The orientation of $M$ is inherited from $\phi(V)$. $\partial M$ has its orientation induced by $\partial U$. That is, at some point $p = \phi(y) \in \partial M$, the unit normal is the normalised vector $D\phi(y) \nu(y)$, where $\nu(y)$ is the normal to $\partial U$ at $y \in \partial U$.
+	
+	The orientation of $M$ is inherited from $\phi(V)$, i.e. the charts for $M$ are those of $U$ but composed with $\phi$. $\partial M$ has its orientation induced by $\partial U$, by the same principle. And now notice that these parametrisations of $M$ and $\partial M$ are also positive, because the transition map between $\phi \circ \psi_{i}$ and $\phi \circ \psi_{j}$ is just $(\phi \circ \psi_{i})^{-1} \circ (\phi \circ \psi_{j})$ and the $\phi$ nicely cancels and we know the determinant of the transition between $\psi_{i}$ and $\psi_{j}$ is positive. Hence we can treat $M$ and $\partial M$ as any other positively oriented manifolds, but their orientation is induced by $U$ and $\partial U$ as above.
 \end{definition}
 
 \begin{theorem}[Generalised Stokes Theorem]\label{thm:stokes}
 	Let $M \subset \mathbb{R}^{n}$ be a parametrised oriented $m$-submanifold with manifold boundary $\partial M$ and $\alpha \in \Omega^{m-1}(\mathbb{R}^{n})$ that has compact support contained in $M$. Then
 	\begin{align*}
-		\int_{\partial M} \alpha = \int_{M} d\alpha .
+		\int_{\partial M} \alpha = \int_{M} d\alpha.
 	\end{align*}
 \end{theorem}
 \begin{proof}
@@ -115,10 +114,11 @@ With the tool of differential forms, we can prove a very powerful theorem that i
 	\begin{align*}
 		\int_{U} d \phi^*\alpha  = \int_{\partial U} \phi^*\alpha .
 	\end{align*}
-	And (I suppose) since $\partial M$ is constructed to be positively oriented via $\phi$, nothing stops us from applying the definition to get
+	Now, $\partial M$ is constructed to be positively oriented according to $\phi$. That is, if $\psi: W \subset \mathbb{R}^{m-1} \to \partial U$ is a positively oriented parametrisation of $\partial U$ (i.e. in the collection of charts for $\partial U$ that form a positive orientation), then $\phi \circ \psi$ is by definition a positively oriented parametrisation of $\partial M$. And since $(\phi \circ \psi)^* \alpha = \psi^* \phi^*\alpha$,
 	\begin{align*}
-		\int_{\partial U} \phi^*\alpha = \int_{\partial M} \alpha.
+		\int_{\partial U} \phi^*\alpha = \int_{W} \psi^* \phi^* \alpha = \int_{W} (\phi \circ \psi)^*\alpha = \int_{\partial M} \alpha,
 	\end{align*}
+	just applying Definition \ref{def:int-form-comp-or-man}, crucially using that the parametrisation $\psi \circ \phi: W \to \partial M$ is positively oriented.
 	Tracing back the chain of equalities, we get the Theorem.
 \end{proof}
 
@@ -149,5 +149,4 @@ A corollary is the Stokes theorem from physics which we've come to love so much.
         d\alpha_{\phi(y)} (D \phi(y)) = \det ( \operatorname{rot} (F \circ \phi(y)), D\phi(y)) = \operatorname{rot} (F) \cdot (\partial_{1} \phi \times \partial_{2}\phi).
     \end{align*}
 \end{proof}
-
 
